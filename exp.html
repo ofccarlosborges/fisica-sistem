@@ -1,0 +1,53 @@
+<!DOCTYPE HTML>
+<html lang="pt-br">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<div id="header" onload="header.html"></div>
+<body>
+  <script src="experimental.js"></script>
+
+  <div id="container-exp">
+    <div class="input-exp">
+      <textarea type="number" class="campo-exp" name="valores[]" id="dados" placeholder="Valores"></textarea><br>
+      <input type="button" name="Botao" class="btn-exp" id="botao" value="Calcular" onclick="pegarValores()"/>
+    </div>
+
+    <table class="tg" style="table-layout: fixed; width: 500px">
+      <colgroup>
+      <col style="width: 168px">
+      <col style="width: 194px">
+      </colgroup>
+      <thead>
+        <tr>
+          <th class="tg-dowp">Soma</th>
+          <th class="tg-7y9h"><div id="soma"></div></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="tg-usvl">Média</td>
+          <td class="tg-9jgf"><div id="media"></td>
+        </tr>
+        <tr>
+          <td class="tg-dowp">Madiana</td>
+          <td class="tg-7y9h">vmediana</td>
+        </tr>
+        <tr>
+          <td class="tg-usvl">Desvio Padrão (σ)</td>
+          <td class="tg-9jgf"><div id="desvioPadrao"></td>
+        </tr>
+        <tr>
+          <td class="tg-dowp">Variância</td>
+          <td class="tg-7y9h"><div id="variancia"></td>
+        </tr>
+      </tbody>
+      </table>
+  </div>
+
+
+</body>
+</html>

@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <link  rel="stylesheet"  href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"  integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"  crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fisica</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+    <nav id="menu-h">
+        <ul>
+            <li><a href="#">Home</a></li>
+
+            <li><a href="#">Sobre</a></li>
+            
+            <li><a href="#">Quem Somos</a></li>
+            
+            <li><a href="#">Contato</a></li>
+            
+            <li><a href="#">Entrar</a></li>
+        </ul>
+    </nav>
+
+
+
+    <div class="imagem-fundo">
+        
+    </div>
+
+    <div class="conteudo">
+
+        <div class="conteiner">
+            <div id="img-esq">
+             <img src="img/data-science.png" alt="" class="img-data"/>
+            </div>
+             
+            <div id="pesq">
+             <form>
+                 <input type="text" class="pesquisa" id="pesquisa" placeholder="Pesquisa..."></input>
+             </form>
+            </div>
+     
+            <div id="img-direi">
+             <img src="img/atom.png" alt="Atomo" class="img-data"/>
+            </div>
+             
+         </div>
+     
+         <section class='FlexContainer'>
+             <div id="box1">
+                 <img src="img/function.png" alt="Graficos" class="img-box"/><br>
+                 <input type="button" value="Gráficos" class="btn-box"></input>
+             </div>
+             <div id="box2">
+                 <img src="img/data-management.png" alt="Graficos" class="img-box"/><br>
+                 <input type="button" value="Simuladores" class="btn-box"></input>
+             </div>
+             <div id="box3">
+                 <img src="img/repost.png" alt="Graficos" class="img-box"/><br>
+                 <input type="button" value="Conversores" class="btn-box"></input>
+             </div>
+             <div id="box4">
+                 <img src="img/science.png" alt="Graficos" class="img-box"><br>
+                 <input type="button" value="Formulas" class="btn-box"></input>
+             </div>
+         </section>
+    
+         <div class="abas">
+            <div class="tab">
+                <button class="tablinks primeira-aba" onclick="openCity(event, 'London')" id="defaultOpen">Mecanica dos Fluidos</button>
+                <button class="tablinks" onclick="openCity(event, 'Paris')">Paris</button>
+                <button class="tablinks" onclick="openCity(event, 'Tokyo')">Tokyo</button>
+              </div>
+              
+              <div id="London" class="tabcontent">
+                <h3>London</h3>
+                <p>London is the capital city of England.</p>
+              </div>
+              
+              <div id="Paris" class="tabcontent">
+                <h3>Paris</h3>
+                <p>Paris is the capital of France.</p> 
+              </div>
+              
+              <div id="Tokyo" class="tabcontent">
+                <h3>Tokyo</h3>
+                <p>Tokyo is the capital of Japan.</p>
+              </div>
+              
+              <script>
+              function openCity(evt, cityName) {
+                var i, tabcontent, tablinks;
+                tabcontent = document.getElementsByClassName("tabcontent");
+                for (i = 0; i < tabcontent.length; i++) {
+                  tabcontent[i].style.display = "none";
+                }
+                tablinks = document.getElementsByClassName("tablinks");
+                for (i = 0; i < tablinks.length; i++) {
+                  tablinks[i].className = tablinks[i].className.replace(" active", "");
+                }
+                document.getElementById(cityName).style.display = "block";
+                evt.currentTarget.className += " active";
+              }
+              
+              // Get the element with id="defaultOpen" and click on it
+              document.getElementById("defaultOpen").click();
+              </script>
+         </div>
+    
+         <section class='FlexContainer'>
+            <div id="box1">
+                <img src="img/function.png" alt="Graficos" class="img-box"><br>
+                <input type="button" value="Gráficos" class="btn-box"></input>
+            </div>
+            <div id="box2">
+                <img src="img/data-management.png" alt="Graficos" class="img-box"><br>
+                <input type="button" value="Simuladores" class="btn-box"></input>
+            </div>
+            <div id="box3">
+                <img src="img/repost.png" alt="Graficos" class="img-box"><br>
+                <input type="button" value="Conversores" class="btn-box"></input>
+            </div>
+            <div id="box4">
+                <img src="img/science.png" alt="Graficos" class="img-box"><br>
+                <input type="button" value="Formulas" class="btn-box"></input>
+            </div>
+        </section>
+    </div>
+
+    <div class="imagem-fundo2">
+        
+    </div>
+
+
+</body>
+</html>
