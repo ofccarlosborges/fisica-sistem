@@ -1,0 +1,105 @@
+<html>
+<link href="https://fonts.googleapis.com/css?family=Roboto:400,700" rel="stylesheet">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+<main>
+	<h1>SEARCH BOX</h1>
+	
+	<div class="SearchBox">
+		<input type="text" class="SearchBox-input" placeholder="BUSCA ALGO COOL">
+	
+			<button class="SearchBox-button">
+				<i class="SearchBox-icon  material-icons">search</i>
+			</button>
+		
+	</div>
+	
+</main>
+
+
+<style>
+:root {
+	--primary-color: #00bcd4;
+	--accent-color: #f50057;
+
+	--text-color: #263238;
+	--body-color: #80deea;
+	--main-font: 'roboto';
+	--font-bold: 700;
+	--font-regular: 400;
+}
+* { box-sizing: border-box }
+
+body {
+	color: var(--text-color);
+	background-color: var(--body-color);
+	font-family: var(--main-font), Arial;
+	font-weight: var(--font-regular);
+}
+main{ 
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	width: 100vw;
+	height: 100vh;
+}
+h1 { font-weight: var(--font-bold) }
+input, 
+button {
+	border: none;
+	background: none;
+	outline: 0;
+}
+button {cursor: pointer}
+.SearchBox-input::placeholder {/* No es un seudoelemento estandar */
+ color:white;
+	opacity: .6;
+}
+/* Chrome, Opera ySafari */
+.SearchBox-input::-webkit-input-placeholder {
+  color: white;
+}
+/* Firefox 19+ */
+.SearchBox-input::-moz-placeholder {
+  color: white;
+}
+/* IE 10+ y Edge */
+.SearchBox-input:-ms-input-placeholder {
+  color: white;
+}
+/* Firefox 18- */
+#formGroupExampleInput:-moz-placeholder {
+  color: white;
+}
+
+
+
+.SearchBox {
+	--height: 4em;
+	display: flex;
+	
+	border-radius: var(--height);
+	background-color: var(--primary-color);
+	height: var(--height);
+}
+
+	.SearchBox-input {
+		width: 400px;
+		font-size: 20px;
+		color: #fff;
+	}
+	.SearchBox-button {
+		display: flex;
+		border-radius: 50%;
+		width: var(--height);
+		height: var(--height);
+		background-color: var(--accent-color);
+	}
+	.SearchBox-icon {
+		margin: auto;
+		color: #fff;
+	}
+</style>
+
+</html>

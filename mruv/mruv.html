@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MRU</title>
+</head>
+<body>
+
+    <div>
+        <input type="number" id="s" placeholder="S"/><br>
+        <input type="number" id="s0" placeholder="S0"/><br>
+        <input type="number" id="v0" placeholder="V0"/><br>
+        <input type="number" id="t" placeholder="t"/><br>
+        <input type="number" id="a" placeholder="a"/><br>
+        <div id="result"></div>
+        <input type="button" id="btn-mruv" onclick="btn()" value="Cacular"/>
+        <input type="button" id="btn-graph" onclick="graph()" value="Grafico"/>
+    </div>
+    
+    <canvas id="myChart2" style="width:100%;max-width:700px"></canvas>
+
+    <script>
+        function btn(){
+            let s = parseFloat(document.getElementById("s").value);
+            let s0 = parseFloat(document.getElementById("s0").value);
+            let v0 = parseFloat(document.getElementById("v0").value);
+            let t = parseFloat(document.getElementById("t").value);
+            let a = parseFloat(document.getElementById("a").value);
+ 
+            document.getElementById("result").innerHTML = s0+(v0*t)+((a*Math.pow(t, 2))/2);
+            //v3.innerHTML = v1 + v2;
+        }
+
+        function graph(){
+            let ctx = document.getElementById("myChart2");
+            let data = {
+	labels: valores,
+    datasets: [
+    {
+        label: "s(t) = s0+v0*t+(a*t^2)/2",
+        function: function(s, s0, v0, t, a) { 
+            return s0+(v0*t)+((a*Math.pow(t, 2))/2);
+        },
+        borderColor: "rgba(153, 102, 255, 1)",
+        data: valores2,
+        fill: false
+    }]
+};
+        }
+
+
+
+    </script>
+</body>
+</html>

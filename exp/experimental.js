@@ -6,7 +6,7 @@ function pegarValores(){
     var soma = 0;
     var sum = 0;
 
-    var qtsElementos = dados.length;
+    //var qtsElementos = dados.length;
 
     var a = [];
     var c = 0;

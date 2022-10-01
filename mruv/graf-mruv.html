@@ -1,0 +1,32 @@
+<!DOCTYPE HTML>
+<html>
+ <head>
+ <title>
+ Chart
+ </title>
+ <link rel="stylesheet" href="css/graf.css">
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js"></script>
+ </head>
+
+ <body>
+
+    <div class="input-exp">
+        <textarea type="number" class="campo-exp" name="valores[]" id="dados" placeholder="Valores 1"></textarea>
+        <textarea type="number" class="campo-exp" name="valores2[]" id="dados2" placeholder="Valores 2"></textarea><br>
+        <input type="button" name="Botao" class="btn-exp" id="botao" value="Calcular" onclick="graf()"/>
+      </div>
+
+    <header>
+    <h1>
+        Charts
+    </h1>
+    </header>
+    
+    <canvas id="plots" style="width:100%;max-width:700px"></canvas>
+
+    <canvas id="myChart" style="width:100%;max-width:700px"></canvas>
+
+    <script src="graph/plot.js"></script>
+
+</body>
+</htm/>

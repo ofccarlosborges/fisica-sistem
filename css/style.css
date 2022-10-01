@@ -46,11 +46,15 @@
 
 
 .pesquisa {
-    margin: 10% auto auto;
     width: 450px;
-    height: 40px;
-    border-radius: 30px;
-    border: solid 1px #707070;
+    display: block;
+    height: 50px;
+    padding: 10px;
+    outline: none;
+    border-color: #8997b9;
+    border-radius: 20px;
+    color: #8997b9;
+    font-size: 16px;
 }
 
 .img-data{
@@ -295,27 +299,35 @@ body {font-family: "Lato", sans-serif;}*/
     }
 
     .btn-exp{
-width: 400px;
-height: 40px;
-background-color: #2fba54;
+
+width: 400px;
+
+height: 40px;
+
+background-color: #2fba54;
  border-radius:28px;
  border:1px solid #18ab29;
-display:
+
+display:
 
 inline-block;
-cursor:
+
+cursor:
 
 pointer;
  color:#ffffff;
-font-family:
+
+font-family:
 
 Arial;
  font-size:20px;
-text-decoration:
+
+text-decoration:
 
 none;
  text-shadow:0px 1px 0px #2f6627;
-margin-top: 4%;
+
+margin-top: 4%;
 }
 
 .btn-exp:hover {

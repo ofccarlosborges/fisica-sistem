@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MRU</title>
+</head>
+<body>
+
+    <div>
+        <input type="number" id="valor1" placeholder="Valor1"/><br>
+        <input type="number" id="valor2" placeholder="Valor2"/><br>
+        <input type="number" id="valor3" placeholder="Valor3"/><br>
+        <input type="button" id="btn-mru" onclick="btn()" value="Cacular"/>
+    </div>
+    
+    <script>
+        function btn(){
+            var v1 = 0;
+            var v2 = 0;
+            v1 = parseFloat(document.getElementById("valor1").value);
+            v2 = parseFloat(document.getElementById("valor2").value);
+            document.getElementById("valor3").innerHTML = v1 + v2;
+            //v3.innerHTML = v1 + v2;
+        }
+
+
+    </script>
+</body>
+</html>
