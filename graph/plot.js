@@ -16,6 +16,7 @@ plots = document.getElementById("plots");
          
         }
     }
+
     for (var j = 0; j < dados2.length; j++){
         if (dados[j].length > 0) {
     
@@ -26,6 +27,7 @@ plots = document.getElementById("plots");
 
 
 var ctx = document.getElementById("myChart");
+
 var data = {
 	labels: valores,
     datasets: [
@@ -55,6 +57,7 @@ Chart.pluginService.register({
     }
 });*/
 
+/*
 var myBarChart = new Chart(ctx, {
     type: 'line',
     data: data,
@@ -67,11 +70,9 @@ var myBarChart = new Chart(ctx, {
             }]
         }
     }
-});
+});*/
 
-var seno = Math.sin(valores);
-var months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul"]; //Stays on the X-axis 
-var traffic = [65, 59, 80, 81, 56, 55, 60] //Stays on the Y-axis 
+
 // Create an instance of Chart object:
 new Chart(plots, {
     type: 'line', //Declare the chart type 
@@ -88,14 +89,26 @@ fill: false, //Fills the curve under the line with the babckground color. It's t
 });
 }
 
+await Excel.run(async (context) => {
+    let sheet = context.workbook.worksheets.getItem("Sample");
+    let dataRange = sheet.getRange("A1:B13");
+    let chart = sheet.charts.add(
+      Excel.ChartType.line, 
+      dataRange, 
+      Excel.ChartSeriesBy.auto);
+
+    chart.title.text = "Sales Data";
+    chart.legend.position = Excel.ChartLegendPosition.right;
+    chart.legend.format.fill.setSolidColor("white");
+    chart.dataLabels.format.font.size = 15;
+    chart.dataLabels.format.font.color = "black";
+
+    await context.sync();
+});
 
 
-
-// Get the HTML canvas by its id
-
-
-
-// Example datasets for X and Y-axes 
+    function graph_excel(){
+        
 
 
-
+    }
