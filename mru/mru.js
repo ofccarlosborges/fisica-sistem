@@ -43,6 +43,10 @@ function escolhaMRU(){
             labelValor3.innerHTML = "Velocidade (m/s)"
 
             btnCalcularMRU.addEventListener("click", calcularTempo);
+        } else if(spinnerMRU == "selecioneOpcao"){
+            labelValor1.innerHTML = ""
+            labelValor2.innerHTML = ""
+            labelValor3.innerHTML = ""
         }
 
     }

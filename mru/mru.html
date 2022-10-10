@@ -3,71 +3,47 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <link rel="stylesheet" href="mru.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="mru.css">
     <title>MRU</title>
 </head>
 <body>
 
-    <div id="mru">
-
-        <div class="select">
-            <select id="escolha_mru" class="style-mru" >
+    <div class="campos-mru">
+        <div class="selecao">
+            <select id="escolha_mru" onchange="escolhaMRU()" class="style-mru" >
+                <option value="selecioneOpcao">Selecione uma opção...</option>
                 <option value="posiInicial">Posição Incial</option>
                 <option value="posiFinal">Posição Final</option>
                 <option value="velo">Velocidade</option>
                 <option value="tempo">Tempo</option>
             </select>
         </div>
+
+        <div class="input-group">
+            <input type="number" id="mruValor1" class="input-area" required/>
+            <label for="inputField" id="labelValor1" class="label"></label>
+        </div>
     
-        <div class="campos-mru">
-
-            <div class="label-float">
-                <input id="posicao" type="text" placeholder="Posição"/>
-                <label>Posição</label>
-            </div>
-        
-            <div class="label-float">
-                <input id="tempo" type="text" placeholder="Posição"/>
-                <label>Tempo</label>
-            </div>
-        
-            <div class="label-float">
-                <input id="velocidade" type="text" placeholder="Posição"/>
-                <label>Velocidade</label>
-            </div>
-
+        <div class="input-group">
+            <input type="number" id="mruValor2" class="input-area" required/>
+            <label for="inputField" id="labelValor2" class="label"></label>
         </div>
-        
+    
+        <div class="input-group">
+            <input type="number" id="mruValor3" class="input-area" required />
+            <label for="inputField" id="labelValor3" class="label"></label>
+        </div>
+
         <div class="btn-mru">
-            <input type="button" id="btn-mru" onclick="btn()" value="Cacular"/>
+            <input type="button" id="btnCalcularMRU" onclick="escolhaMRU()" class="btnCalcular" value="CALCULAR"/>
         </div>
 
-    <div class="resultados"><div class="result-valor" id="result_valor"> Valor</div></div>
-
-
+        <div class="resultados"><div class="result-valor" id="result_valor"> </div></div>
     </div>
 
-
-    
-    
-    <script>
-
-        let selecao = document.getElementById("escolha_mru");
-        //let valor = document.getElementById("result_valor");
-        selecao.addEventListener("change",function (e){
-                console.log(e.target.value);
-                document.getElementById("result_valor").value = option.text;
-});
-
-        function btn(){
-            let posicao = parseFloat(document.getElementById("posicao").value);
-            let tempo = parseFloat(document.getElementById("tempo").value);
-            let velocidade = parseFloat(document.getElementById("velocidade").value);
-            document.getElementById("result_valor").innerHTML = posicao + (velocidade * tempo) + "m";
-        }
+    <script src="mru.js"> </script>
 
 
-    </script>
 </body>
 </html>
