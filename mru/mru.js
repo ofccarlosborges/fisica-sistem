@@ -12,6 +12,7 @@ function escolhaMRU(){
     
     if(spinnerMRU == "velo"){
 
+
         labelValor1.innerHTML = "Posição incial (m)"
         labelValor2.innerHTML = "Posicao final (m)"
         labelValor3.innerHTML = "Tempo (s)"
@@ -19,6 +20,9 @@ function escolhaMRU(){
         btnCalcularMRU.addEventListener("click", calcularVelocidade); 
         //btnCalcularMRU.onclick = calcularVelocidade();
         
+        mruValor1.disabled = false;
+        mruValor2.disabled = false;
+        mruValor3.disabled = false;
         
         } else if(spinnerMRU == "posiInicial"){
             
@@ -28,6 +32,10 @@ function escolhaMRU(){
 
         btnCalcularMRU.addEventListener("click", calcularPosiInicial);
 
+        mruValor1.disabled = false;
+        mruValor2.disabled = false;
+        mruValor3.disabled = false;
+
         } else if(spinnerMRU == "posiFinal"){
             
             labelValor1.innerHTML = "Posição Incial (m)"
@@ -36,6 +44,10 @@ function escolhaMRU(){
 
             btnCalcularMRU.addEventListener("click", calcularPosiFinal);
 
+            mruValor1.disabled = false;
+            mruValor2.disabled = false;
+            mruValor3.disabled = false;
+
         } else if(spinnerMRU == "tempo"){
             
             labelValor1.innerHTML = "Posição incial (m)"
@@ -43,10 +55,19 @@ function escolhaMRU(){
             labelValor3.innerHTML = "Velocidade (m/s)"
 
             btnCalcularMRU.addEventListener("click", calcularTempo);
+
+            mruValor1.disabled = false;
+            mruValor2.disabled = false;
+            mruValor3.disabled = false;
+
         } else if(spinnerMRU == "selecioneOpcao"){
             labelValor1.innerHTML = ""
             labelValor2.innerHTML = ""
             labelValor3.innerHTML = ""
+
+            mruValor1.disabled = true;
+            mruValor2.disabled = true;
+            mruValor3.disabled = true;
         }
 
     }
@@ -114,11 +135,11 @@ function escolhaMRU(){
             alert('Campo vazio');
 
         } else {
-            let posiInicial = mruValor1.value;
+            let posiInicial = parseFloat(mruValor1.value);
             let tempo = mruValor2.value;
             let velocidade = mruValor3.value;
     
-            document.getElementById("result_valor").innerHTML = posiInicial + (velocidade * tempo) + " m";
+            document.getElementById("result_valor").innerHTML = (posiInicial + (velocidade * tempo)) + " m";
 
 
             
