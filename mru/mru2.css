@@ -11,15 +11,15 @@ main {
     transform: translate(-50%, -50%);
 }
 
-.input-group {
+.grupo-campos {
     width: 100%;
     position: relative;
     margin-top: 20px;
     margin-left: auto;
     margin-right: auto;
 }
-
-.input-group .input-area {
+/*
+.grupo-campos .input-area {
     outline: none;
     width: 100%;
     text-align: center;
@@ -28,20 +28,17 @@ main {
     padding: 16px 0px;
     font-size: 18px;
     border-radius: 5px;
-}
+}*/
 
-.input-group .input-area:valid + .label {
-    top: -8px;
-    padding: 0 3px;
-    font-size: 14px;
+.grupo-campos label {
     color: #8d8d8d;
 }
 
-.input-group .input-area:focus {
+.grupo-campos .input-area:focus {
     border: 2px solid royalblue;
 }
 
-.input-group .label {
+/*.grupo-campos .label {
     color: #8d8d8d;
     position: absolute;
     top: 20px;
@@ -49,25 +46,17 @@ main {
     background: #f3f3f3;
 }
 
-.input-group .input-area:focus + .label {
+.grupo-campos .input-area:focus + .label {
     top: -8px;
     padding: 0 3px;
     font-size: 14px;
     color: royalblue;
-}
+}*/
 
-.campos-mru {
-  /* position: relative; */
-  align-items: center;
-  width: 350px;
-  margin-top: 3%;
-  margin-left: auto;
-  margin-right: auto;
-  text-align: center;
-  background-color: #f1f1f1;
-  border-radius: 10px;
-  padding: 25px;
-  box-shadow: 0px 0px 10px rgb(66 66 66 / 70%);
+.campo-texto {
+
+height: 4rem;
+background: #f3f3f3;
 }
 .btnCalcular {
   width: 250px;
