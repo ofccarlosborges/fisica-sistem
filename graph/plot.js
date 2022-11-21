@@ -25,9 +25,9 @@ plots = document.getElementById("plots");
         }
     }
 
-
-var ctx = document.getElementById("myChart");
-
+    valores = valores.sort();
+    valores2 = valores2.sort();
+/*
 var data = {
 	labels: valores,
     datasets: [
@@ -40,7 +40,7 @@ var data = {
         data: valores2,
         fill: false
     }]
-};
+};*/
 
 /*
 Chart.pluginService.register({
@@ -81,34 +81,45 @@ new Chart(plots, {
     datasets: [{
     data: valores, //Y-axis data
         
-backgroundColor: '#e9e9e9',
-borderColor: 'black',
-fill: false, //Fills the curve under the line with the babckground color. It's true by default 
- }]
- },
-});
+    backgroundColor: '#e9e9e9',
+    label: 'Titulo',
+    borderColor: 'black',
+    fill: false, //Fills the curve under the line with the babckground color. It's true by default 
+            }]
+        },
+    options:{
+        scales: {
+            yAxes: [
+              {
+                position: 'left',
+                scaleLabel: {
+                  display: true,
+                  labelString: 'Frequency Rate - left',
+                },
+              },
+            ],
+            xAxes: [
+              {
+                display: true,
+                position: 'bottom',
+                scaleLabel: {
+                  display: true,
+                  labelString: 'Titulo do eixo X',
+                  fontStyle: 'italic',
+                  fontSize: 12,
+                  fontColor: '#030',
+                },
+              },
+            ],
+          },
+          plugins: {
+            legend: {
+                display: true,
+                labels: {
+                    color: 'rgb(255, 99, 132)'
+                }
+            }
+        }
+    },
+    });
 }
-
-await Excel.run(async (context) => {
-    let sheet = context.workbook.worksheets.getItem("Sample");
-    let dataRange = sheet.getRange("A1:B13");
-    let chart = sheet.charts.add(
-      Excel.ChartType.line, 
-      dataRange, 
-      Excel.ChartSeriesBy.auto);
-
-    chart.title.text = "Sales Data";
-    chart.legend.position = Excel.ChartLegendPosition.right;
-    chart.legend.format.fill.setSolidColor("white");
-    chart.dataLabels.format.font.size = 15;
-    chart.dataLabels.format.font.color = "black";
-
-    await context.sync();
-});
-
-
-    function graph_excel(){
-        
-
-
-    }

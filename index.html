@@ -1,12 +1,9 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-    
-    //Teste
-
 <head>
     <meta charset="UTF-8">
-    <link  rel="stylesheet"  href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"  integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"  crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Fisica</title>
     <link rel="stylesheet" href="css/style.css">
@@ -14,64 +11,99 @@
 
 <body>
 
-    <nav id="menu-h">
-        <ul>
-            <li><a href="#">Home</a></li>
-
-            <li><a href="#">Sobre</a></li>
-            
-            <li><a href="#">Quem Somos</a></li>
-            
-            <li><a href="#">Contato</a></li>
-            
-            <li><a href="#">Entrar</a></li>
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-dark " style="background-color:#2a9315;">
+    <!-- Container wrapper -->
+    <div class="container-fluid">
+  
+      <!-- Navbar brand -->
+      <a class="navbar-brand" href="#">Brand</a>
+  
+      <!-- Toggle button -->
+      <button class="navbar-toggler" type="button" data-mdb-toggle="collapse" data-mdb-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <i class="fas fa-bars"></i>
+      </button>
+  
+      <!-- Collapsible wrapper -->
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+  
+          <!-- Link -->
+          <li class="nav-item">
+            <a class="nav-link" href="#">Link</a>
+          </li>
+  
+          <!-- Dropdown -->
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-mdb-toggle="dropdown" aria-expanded="false">
+              Dropdown
+            </a>
+            <!-- Dropdown menu -->
+            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <li>
+                <a class="dropdown-item" href="#">Action</a>
+              </li>
+              <li>
+                <a class="dropdown-item" href="#">Another action</a>
+              </li>
+              <li>
+                <hr class="dropdown-divider" />
+              </li>
+              <li>
+                <a class="dropdown-item" href="#">Something else here</a>
+              </li>
+            </ul>
+          </li>
+  
         </ul>
-    </nav>
-
-
-
-    <div class="imagem-fundo">
-        
+  
+      </div>
     </div>
+    <!-- Container wrapper -->
+  </nav>
+  <!-- Navbar -->
+
+  <img src="img/menina-estudando.svg" class="img-fluid">
+  <div class="are1 text-center justify-content-center" style="height: 14rem; background: #d93333;">
+    <label style="font-size: 2rem; font-family: sans-serif, serif; color: #ebebeb; font-weight: 600;">ALGUMAS FERRAMENTAS</label>
+  </div>
+
+  <div class="container">
+    <div class="row gx-3 justify-content-center">
+
+        <div class="col-lg-3 col-md-6" style="width: 12rem; height: 16rem; margin-top: -2rem; margin-left: 10px; margin-right: 10px; border-radius: 15px; background: #68E574">
+          <div class="card-body text-center">
+            <img src="img/icon_graficos.png" alt="Graficos" class="img-fluid img-box"/> 
+            <a href="#" class="btn btn-dark mx-auto my-5" _msthash="2874183" _nsttexthash="245323">GRÁFICOS</a>
+        </div>
+        </div>
+
+        <div class="col-lg-3 col-md-6" style="width: 12rem; height: 16rem; margin-left: 10px; margin-right: 10px; margin-top: -2rem; border-radius: 15px; background: #D09BE9">
+          <div class="card-body text-center">
+            <img src="img/icon_simuladores.png" alt="Graficos" class="img-fluid img-box"/> 
+            <a href="#" class="btn btn-dark mx-auto my-5" _msthash="2874183" _nsttexthash="245323">SIMULADORES</a>
+        </div>
+        </div>
+
+        <div class="col-lg-3 col-md-6" style="width: 12rem; height: 16rem; margin-left: 10px; margin-right: 10px; margin-top: -2rem; border-radius: 15px; background: #74D7EB">
+          <div class="card-body text-center">
+            <img src="img/icon_conversores.png" alt="Graficos" class="img-fluid img-box"/> 
+            <a href="#" class="btn btn-dark mx-auto my-5" _msthash="2874183" _nsttexthash="245323">CONVERSORES</a>
+        </div>
+        </div>
+
+        <div class="col-lg-3 col-md-6" style="width: 12rem; height: 16rem; margin-left: 10px; margin-right: 10px; margin-top: -2rem; border-radius: 15px; background: #ECC648">
+          <div class="card-body text-center">
+            <img src="img/icon_formulas.png" alt="Graficos" class="img-fluid img-box"/> 
+            <a href="#" class="btn btn-dark mx-auto my-5" _msthash="2874183" _nsttexthash="245323">FORMULAS</a>
+        </div>
+        </div>
+
+    </div>
+  </div>
+
 
     <div class="conteudo">
-
-        <div class="conteiner">
-
-            <div id="img-esq">
-             <img src="img/data-science.png" alt="" class="img-data"/>
-            </div>
-             
-            <div id="pesq">
-             <form>
-                 <input type="text" class="pesquisa" id="pesquisa" placeholder="Pesquisa..."></input>
-             </form>
-            </div>
-     
-            <div id="img-direi">
-             <img src="img/atom.png" alt="Atomo" class="img-data"/>
-            </div>
-             
-         </div>
-     
-         <section class='FlexContainer'>
-             <div id="box1">
-                 <img src="img/function.png" alt="Graficos" class="img-box"/><br>
-                 <input type="button" value="Gráficos" class="btn-box" ></input>
-             </div>
-             <div id="box2">
-                 <img src="img/data-management.png" alt="Graficos" class="img-box"/><br>
-                 <input type="button" value="Simuladores" class="btn-box"></input>
-             </div>
-             <div id="box3">
-                 <img src="img/repost.png" alt="Graficos" class="img-box"/><br>
-                 <input type="button" value="Conversores" class="btn-box"></input>
-             </div>
-             <div id="box4">
-                 <img src="img/science.png" alt="Graficos" class="img-box"><br>
-                 <input type="button" value="Formulas" class="btn-box"></input>
-             </div>
-         </section>
     
          <div class="abas">
             <div class="tab">
@@ -114,30 +146,9 @@
               document.getElementById("defaultOpen").click();
               </script>
          </div>
-    
-         <section class='FlexContainer'>
-            <div id="box1">
-                <img src="img/function.png" alt="Graficos" class="img-box"><br>
-                <input type="button" value="Gráficos" class="btn-box"></input>
-            </div>
-            <div id="box2">
-                <img src="img/data-management.png" alt="Graficos" class="img-box"><br>
-                <input type="button" value="Simuladores" class="btn-box"></input>
-            </div>
-            <div id="box3">
-                <img src="img/repost.png" alt="Graficos" class="img-box"><br>
-                <input type="button" value="Conversores" class="btn-box"></input>
-            </div>
-            <div id="box4">
-                <img src="img/science.png" alt="Graficos" class="img-box"><br>
-                <input type="button" value="Formulas" class="btn-box"></input>
-            </div>
-        </section>
+
     </div>
 
-    <div class="imagem-fundo2">
-        
-    </div>
 
 
 </body>

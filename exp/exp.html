@@ -4,48 +4,62 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
   <link rel="stylesheet" href="../css/style.css">
 </head>
 <div id="header" onload="header.html"></div>
 <body>
   <script src="experimental.js"></script>
 
-  <div id="container-exp">
-    <div class="input-exp">
-      <textarea type="number" class="campo-exp" name="valores[]" id="dados" placeholder="Valores"></textarea><br>
-      <input type="button" name="Botao" class="btn-exp" id="botao" value="Calcular" onclick="pegarValores()"/>
-    </div>
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-lg-4 col-md-12" style="margin-top: 5%;">
+        <div class="card  ">
+          <div class="card-body text-center" style="text-align: center; background-color: #f1f1f1;border-radius: 10px; padding: 25px; box-shadow: 0px 0px 5px rgb(66 66 66 / 70%);">
+            <div class="grupo-campos form-floating  mb-3 mt-3">
+                <textarea type="number" class="form-control " name="valores[]" id="dados" placeholder="Valores" style="width: 30rem; height: 15rem; background: #fbfbfb;"></textarea>
+            </div>
 
-    <table class="tg" style="table-layout: fixed; width: 500px">
-      <colgroup>
-      <col style="width: 168px">
-      <col style="width: 194px">
-      </colgroup>
-      <thead>
-        <tr>
-          <th class="tg-dowp">Soma</th>
-          <th class="tg-7y9h"><div id="soma"></div></th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td class="tg-usvl">Média</td>
-          <td class="tg-9jgf"><div id="media"></td>
-        </tr>
-        <tr>
-          <td class="tg-dowp">Madiana</td>
-          <td class="tg-7y9h">vmediana</td>
-        </tr>
-        <tr>
-          <td class="tg-usvl">Desvio Padrão (σ)</td>
-          <td class="tg-9jgf"><div id="desvioPadrao"></td>
-        </tr>
-        <tr>
-          <td class="tg-dowp">Variância</td>
-          <td class="tg-7y9h"><div id="variancia"></td>
-        </tr>
-      </tbody>
-      </table>
+            <div >
+              <input type="button" name="Botao" class="btn-exp btn" id="botao" value="Calcular" onclick="pegarValores()"/>
+          </div>
+
+            <table class="tg" style="table-layout: fixed; width: 15rem">
+              <colgroup>
+              <col style="width: 168px">
+              <col style="width: 194px">
+              </colgroup>
+              <thead>
+                <tr>
+                  <th class="tg-dowp">Soma</th>
+                  <th class="tg-7y9h"><div id="soma"></div></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="tg-usvl">Média</td>
+                  <td class="tg-9jgf"><div id="media"></td>
+                </tr>
+                <tr>
+                  <td class="tg-dowp">Madiana</td>
+                  <td class="tg-7y9h">vmediana</td>
+                </tr>
+                <tr>
+                  <td class="tg-usvl">Desvio Padrão (σ)</td>
+                  <td class="tg-9jgf"><div id="desvioPadrao"></td>
+                </tr>
+                <tr>
+                  <td class="tg-dowp">Variância</td>
+                  <td class="tg-7y9h"><div id="variancia"></td>
+                </tr>
+              </tbody>
+              </table>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 
 

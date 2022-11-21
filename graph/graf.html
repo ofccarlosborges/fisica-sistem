@@ -4,18 +4,30 @@
  <title>
  Chart
  </title>
- <link rel="stylesheet" href="css/graf.css">
+ <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css">
+ <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
+ <link rel="stylesheet" href="../css/graf.css">
  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js"></script>
  </head>
 
  <body>
+  <div class="container justify-content-center" style="display:flex ;">
+    
+    <div class="form-floating">
+      <textarea type="number" class="form-control campo-texto text-center" id="dados2" placeholder="Valores X" name="valores[]" style=" width: 20rem; height: 20rem; font-size: 1.4rem; margin-right:20px ;" required></textarea>
+      <label for="valores[]" class="text-center" id="Labeldados2">Valores X</label>
+    </div>
 
-    <div class="input-exp">
-        <textarea type="number" class="campo-exp" name="valores[]" id="dados" placeholder="Valores 1"></textarea>
-        <textarea type="number" class="campo-exp" name="valores2[]" id="dados2" placeholder="Valores 2"></textarea><br>
-        <input type="button" name="Botao" class="btn-exp" id="botao" value="Calcular" onclick="graf()"/>
-        <input type="button" name="Botao" class="btn-exp" id="btn_graph" value="Grafico" onclick="graph_excel()"/>
-      </div>
+    <div class="form-floating">
+      <textarea type="number" class="form-control campo-texto text-center" id="dados2" placeholder="Valores Y" name="valores2[]" style="width: 20rem; height: 20rem; font-size: 1.4rem;" required></textarea>
+      <label for="valores2[]" class="text-center" id="Labeldados2">Valores Y</label>
+    </div>
+  </div>
+
+          <input type="button" name="Botao" class="btn-exp" id="botao" value="Calcular" onclick="graf()"/>
+
+
+
 
     <header>
     <h1>
@@ -23,9 +35,14 @@
     </h1>
     </header>
     
-    <canvas id="plots" style="width:100%;max-width:700px"></canvas>
+    <div class="card-body" style="background: #e7e7e7;
+    width: 65rem;
+    height: 33rem;
+    margin-left: auto;
+    margin-right: auto;">
+      <canvas id="plots" ></canvas>
+    </div>
 
-    <canvas id="myChart" style="width:100%;max-width:700px"></canvas>
 
     <script src="plot.js"></script>
 
