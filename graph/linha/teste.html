@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <script src="https://cdn.jsdelivr.net/npm/handsontable/dist/handsontable.full.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/handsontable/dist/languages/all.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/handsontable/dist/handsontable.full.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/css/bootstrap.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+  <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/regression/dist/regression.min.js"></script>
+
+  <style>
+    .card-body {
+      padding: 1rem 1rem !important;
+    }
+
+    .card-header {
+      text-align: center;
+    }
+  </style>
+
+</head>
+
+<body>
+
+
+  <div class="container">
+    <div class="row">
+      <div class="col-md-2">
+        <div id="table"></div>
+        <button id="add-btn" class="btn">Add Linhas ao Gráficos</button>
+      </div>
+      <div class="col-md-10">
+        <div class="card bg-default">
+          <h5 class="card-header">
+            Gráfico de Dispersão
+          </h5>
+          <div class="card-body">
+            <p class="card-text">
+            <div id="chart"></div>
+            <div id="coefficients"></div>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    $(document).ready(function () {
+      var trace = {
+        x: [],
+        y: [],
+        mode: 'lines+markers',
+        marker: {
+          color: 'black'
+        }
+      };
+
+      var layout = {
+        title: 'Clique aqui<br>para editar o tiltulo do gráfico',
+        xaxis: { title: 'Clique para editar o texto do eixo X' },
+        yaxis: { title: 'Clique para editar o texto do eixo Y' },
+        plot_bgcolor: 'white'
+      };
+
+      var config = {
+        responsive: true,
+        displayModeBar: true,
+        displaylogo: false,
+        modeBarButtonsToRemove: ['pan2d', 'select2d', 'lasso2d', 'resetScale2d', 'zoomOut2d', 'toggleSpikelines', 'hoverClosestCartesian', 'hoverCompareCartesian'],
+        editable: true,
+        modeBarButtonsToAdd: [
+          {
+            name: 'button1',
+            icon: null,
+            title: "Ajuste Linear",
+            click: function (gd) { AjusteLinear(); }
+          },
+          {
+            name: 'button2',
+            icon: null,
+            title: "Ajuste Polinomial",
+            click: function (gd) { AjustePolinomial(); }
+          }
+        ],
+        toImageButtonOptions: {
+            format: 'png', // one of png, svg, jpeg, webp
+            filename: 'fisica_tools',
+            scale: 1 // Multiply title/legend/axis/canvas sizes by this factor
+          }
+      };
+
+      var dataPlot = [trace];
+
+
+      // generate an array of arrays with dummy data
+      const data = new Array(23) // number of rows
+        .fill()
+        .map((_, row) => new Array(2) // number of columns
+          .fill()
+          //.map((_, column) => `${row}, ${column}`)
+        );
+
+      Plotly.newPlot('chart', dataPlot, layout, config);
+      // cria a tabela com Handsontable
+      var container = document.getElementById('table');
+      var hot = new Handsontable(container, {
+        data,
+        minSpareRows: true, // adicionado para evitar preencher com dados duplicados
+        colHeaders: ['X', 'Y'],
+        rowHeaders: true,
+        contextMenu: true,
+        with: '100%',
+        language: 'pt-BR',
+        allowInsertColumn: false,
+        allowRemoveColumn: false,
+        licenseKey: 'non-commercial-and-evaluation'
+      });
+
+      updateChart(hot);
+
+      // adiciona uma nova linha na tabela
+      $('#addRow').on('click', function () {
+        hot.alter('insert_row');
+      });
+
+
+      // função para atualizar o gráfico
+      function updateChart(hot) {
+        var x = [];
+        var y = [];
+
+        // percorre cada linha da tabela e adiciona os valores de X e Y aos arrays correspondentes
+        var hotData = hot.getData();
+        for (var i = 0; i < hotData.length; i++) {
+          var xVal = hotData[i][0];
+          var yVal = hotData[i][1];
+          // converte os valores para números
+          if (xVal !== '') {
+            x.push(parseFloat(xVal));
+          }
+          if (yVal !== '') {
+            y.push(parseFloat(yVal));
+          }
+        }
+        // atualiza os dados do gráfico
+        Plotly.update('chart', { x: [x], y: [y] });
+      }
+
+
+      // evento de colar na tabela
+      hot.addHook('afterPaste', function (changes, source) {
+        // se a fonte do evento não foi a área de transferência, não faz nada
+        if (source !== 'paste') {
+          return;
+        }
+
+        var hotData = hot.getData();
+
+        // percorre cada linha que foi colada
+        for (var i = 0; i < changes.length; i++) {
+          var row = changes[i][0];
+          var col = changes[i][1];
+          var pastedData = changes[i][3];
+
+          // verifica se o valor colado é uma string
+          if (typeof pastedData === 'string') {
+            // quebra o texto colado em linhas
+            var pastedLines = pastedData.split('\n');
+
+            // percorre cada linha e adiciona os dados correspondentes à tabela
+            for (var j = 0; j < pastedLines.length; j++) {
+              hotData[row + j][col] = pastedLines[j];
+            }
+
+            // atualiza a tabela com os novos valores
+            hot.loadData(hotData);
+          }
+        }
+      });
+
+
+      // atualiza o gráfico quando a tabela é modificada
+      hot.addHook('afterChange', function () {
+        updateChart(hot);
+      });
+
+      var n = 0;
+
+
+
+    });
+
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Entrada de Dados</title>
+</head>
+<body>
+
+	<form>
+		<textarea id="input1" rows="10" cols="50"></textarea>
+		<br>
+		<textarea id="input2" rows="10" cols="50"></textarea>
+		<br>
+		<button type="button" onclick="gerarGrafico()">Gerar Gráfico</button>
+	</form>
+
+	<div id="grafico"></div>
+
+	<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+	<script>
+		function gerarGrafico() {
+			// Obter os dados dos textareas
+			const input1 = document.getElementById("input1").value.trim().split("\n");
+			const input2 = document.getElementById("input2").value.trim().split("\n");
+
+			// Converter os dados para números
+			const dados1 = input1.map(d => parseFloat(d));
+			const dados2 = input2.map(d => parseFloat(d));
+
+			// Criar o trace do histograma para os dados 1
+			const trace1 = {
+				x: dados1,
+				type: 'histogram',
+				name: 'Dados 1'
+			};
+
+			// Criar o trace do histograma para os dados 2
+			const trace2 = {
+				x: dados2,
+				type: 'histogram',
+				name: 'Dados 2'
+			};
+
+			// Criar o layout do gráfico
+			const layout = {
+				title: 'Histograma',
+				xaxis: {title: 'Valores'},
+				yaxis: {title: 'Contagem'}
+			};
+
+			// Criar o objeto de dados
+			const data = [trace1, trace2];
+
+			// Gerar o gráfico
+			Plotly.newPlot('grafico', data, layout);
+		}
+	</script>
+
+</body>
+</html>

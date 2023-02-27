@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script src="https://cdn.jsdelivr.net/npm/matter-js@0.14.2/build/matter.min.js"></script>
+    <style>
+      /* Estilo para o canvas */
+      canvas {
+        border: 1px solid black;
+      }
+    </style>
+  </head>
+  <body>
+    <canvas id="canvas"></canvas>
+    <script>
+      // Cria o mundo da simulação
+      const { Engine, Render, World, Bodies, Body, Events, Constraint } = Matter;
+      const engine = Engine.create();
+      const render = Render.create({
+        canvas: document.getElementById("canvas"),
+        engine: engine
+      });
+      
+      // Criação da massa
+      const mass = Bodies.circle(200, 100, 20);
+      World.add(engine.world, mass);
+      
+      // Criação da mola
+      const spring = Constraint.create({
+        pointA: { x: 100, y: 100 },
+        bodyB: mass,
+        stiffness: 0.05
+      });
+      World.add(engine.world, spring);
+      
+      // Adicionando evento de teclado para aplicar forças na massa
+      document.addEventListener("keydown", event => {
+        if (event.code === "ArrowUp") {
+          Body.applyForce(mass, mass.position, { x: 0, y: -0.1 });
+        } else if (event.code === "ArrowDown") {
+          Body.applyForce(mass, mass.position, { x: 0, y: 0.1 });
+        } else if (event.code === "ArrowLeft") {
+          Body.applyForce(mass, mass.position, { x: -0.1, y: 0 });
+        } else if (event.code === "ArrowRight") {
+          Body.applyForce(mass, mass.position, { x: 0.1, y: 0 });
+        }
+      });
+      
+      // Adicionando evento de clique e arraste para mover a massa
+      Events.on(render, "mousedown", event => {
+        const mousePosition = event.mouse.position;
+        const { x, y } = mousePosition;
+      
+        // Verifica se o clique foi dentro da massa
+        if (
+          x > mass.position.x - mass.circleRadius &&
+          x < mass.position.x + mass.circleRadius &&
+          y > mass.position.y - mass.circleRadius &&
+          y < mass.position.y + mass.circleRadius
+        ) {
+          Body.setVelocity(mass, { x: 0, y: 0 });
+          const mouseConstraint = Conaint.create({
+                bodyB: mass,
+                pointB: { x: 0, y: 0 },
+                pointA: mousePosition,
+                stiffness: 0.05
+            });
+                World.add(engine.world, mouseConstraint);
+            }
+        });
+        Events.on(render, "mouseup", event => {
+    World.remove(engine.world, event.mouse.constraint);
+  });
+  
+  // Inicia a simulação
+  Engine.run(engine);
+  Render.run(render);
+</script>
+</body>
+</html>

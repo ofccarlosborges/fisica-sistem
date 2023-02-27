@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+  <script src="https://unpkg.com/regression"></script>
+</head>
+
+<body>
+
+  <table id="dataTable">
+    <thead>
+      <tr>
+        <th>X</th>
+        <th>Y</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><input type="text" name="xValues" class="xValues"></td>
+        <td><input type="text" name="yValues" class="yValues"></td>
+      </tr>
+      <tr>
+        <td><input type="text" name="xValues" class="xValues"></td>
+        <td><input type="text" name="yValues" class="yValues"></td>
+      </tr>
+      <tr>
+        <td><input type="text" name="xValues" class="xValues"></td>
+        <td><input type="text" name="yValues" class="yValues"></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <button type="button" id="addRow">Adicionar Linha</button>
+
+  <div id="plot"></div>
+
+  <div id="coefficients"></div>
+
+  <button type="button" id="linearFitBtn">Ajuste Linear</button>
+
+  <button type="button" id="polynomialFitBtn">Ajuste Polinomial</button>
+
+  <script>
+    const addRowBtn = document.getElementById('addRow');
+    addRowBtn.addEventListener('click', addRow);
+
+    const table = document.getElementById('dataTable');
+
+    function addRow() {
+      const table = document.getElementById('dataTable').getElementsByTagName('tbody')[0];
+      const row = table.insertRow();
+      const xCell = row.insertCell();
+      const yCell = row.insertCell();
+      const xInput = document.createElement('input');
+      const yInput = document.createElement('input');
+      xInput.type = 'text';
+      xInput.name = 'xValues';
+      xInput.classList.add('xValues');
+      yInput.type = 'text';
+      yInput.name = 'yValues';
+      yInput.classList.add('yValues');
+      xCell.appendChild(xInput);
+      yCell.appendChild(yInput);
+      addInputEventListeners();
+    }
+
+    function addInputEventListeners() {
+      table.addEventListener('input', generatePlot);
+    }
+
+    function getDataFromTable() {
+      var data = [];
+      var table = document.getElementById("dataTable");
+      for (var i = 1; i < table.rows.length; i++) {
+        var row = table.rows[i];
+        var rowData = {
+          x: parseFloat(row.cells[0].querySelector("input").value),
+          y: parseFloat(row.cells[1].querySelector("input").value)
+        };
+        data.push(rowData);
+      }
+      return data;
+    }
+
+    function generatePlot() {
+      data = getDataFromTable();
+
+      var x = data.map(function (row) {
+        return row.x;
+      });
+
+      var y = data.map(function (row) {
+        return row.y;
+      });
+
+      var trace1 = {
+        x: x,
+        y: y,
+        mode: 'markers',
+        type: 'scatter',
+        marker: { color: "red" }
+      };
+
+      var layout = {
+        title: 'Clique aqui<br>para editar o tiltulo do gráfico',
+        xaxis: { title: 'Clique para editar o texto do eixo X' },
+        yaxis: { title: 'Clique para editar o texto do eixo Y' },
+        plot_bgcolor: 'white'
+      };
+
+      var config = {
+        responsive: true,
+        displayModeBar: true,
+        displaylogo: false,
+        modeBarButtonsToRemove: ['pan2d', 'select2d', 'lasso2d', 'resetScale2d', 'zoomOut2d', 'toggleSpikelines', 'hoverClosestCartesian', 'hoverCompareCartesian'],
+        editable: true,
+        modeBarButtonsToAdd: [
+          {
+            name: 'button1',
+            icon: null,
+            title: "Meu Botão de Texto",
+            click: function (gd) {
+              alert('button1')
+            }
+          }
+        ]
+      };
+
+      Plotly.newPlot("plot", [trace1], layout, config);
+    }
+
+    addInputEventListeners();
+
+    var linearFitBtn = document.getElementById('linearFitBtn');
+    var polynomialFitBtn = document.getElementById('polynomialFitBtn');
+
+    linearFitBtn.addEventListener('click', AjusteLinear);
+    polynomialFitBtn.addEventListener('click', AjustePolynomial);
+
+    function getData() {
+      var xValues = [];
+      var yValues = [];
+      var table = document.getElementById("dataTable");
+      for (var i = 1; i < table.rows.length; i++) {
+        var row = table.rows[i];
+        xValues.push(parseFloat(row.cells[0].querySelector("input").value));
+        yValues.push(parseFloat(row.cells[1].querySelector("input").value));
+      }
+      return [xValues, yValues];
+    }
+
+    function AjusteLinear() {
+      const [xValues, yValues] = getData();
+
+      const result = regression.linear(xValues.map((x, i) => [x, yValues[i]]));
+
+      const xFit = [Math.min(...xValues), Math.max(...xValues)];
+      const yFit = xFit.map(x => result.predict(x)[1]);
+
+      const trace = {
+        x: xFit,
+        y: yFit,
+        name: 'Ajuste Linear',
+        mode: 'lines',
+        type: 'scatter',
+        line: { color: 'blue' }
+      };
+
+      const layout = {
+        xaxis: { title: 'X' },
+        yaxis: { title: 'Y' }
+      };
+
+      Plotly.addTraces('plot', trace);
+      document.getElementById('coefficients').innerHTML = `Coeficiente Linear: ${result.equation[0].toFixed(2)}<br>Coeficiente Angular: ${result.equation[1].toFixed(2)}`;
+
+    }
+
+
+    function AjustePolynomial() {
+      const [xValues, yValues] = getData();
+
+      const result = regression.polynomial(xValues.map((x, i) => [x, yValues[i]]), { order: 2 });
+
+      const xFit = [...xValues];
+      xFit.sort((a, b) => a - b);
+      const yFit = xFit.map(x => result.predict(x)[1]);
+
+      const trace = {
+        x: xFit,
+        y: yFit,
+        name: 'Ajuste Polinomial',
+        mode: 'lines',
+        type: 'scatter',
+        line: { color: 'green' }
+      };
+
+      const layout = {
+        xaxis: { title: 'X' },
+        yaxis: { title: 'Y' }
+      };
+
+      Plotly.addTraces('plot', trace);
+      document.getElementById('coefficients').innerHTML = `Coeficiente Angular: ${result.equation[0].toFixed(2)}<br>Coeficiente Linear: ${result.equation[1].toFixed(2)}<br>Coeficiente Constante: result.equation[2].toFixed(2)`;;
+    }
+
+  </script>
+</body>
+
+</html>

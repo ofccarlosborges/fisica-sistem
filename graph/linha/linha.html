@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div>
+        <label for="x-values">Valores de x:</label>
+        <textarea id="x-values" rows="5"></textarea>
+      </div>
+      <div>
+        <label for="y-values">Valores de y:</label>
+        <textarea id="y-values" rows="5"></textarea>
+      </div>
+      <button id="plot-button">Plotar Gráfico</button>
+      
+      <div id="plot"></div>
+      
+      <script>
+// Seleciona o botão "Plotar Gráfico"
+const plotButton = document.querySelector("#plot-button");
+
+// Quando o botão for clicado, plota o gráfico
+plotButton.addEventListener("click", () => {
+  // Obtém os valores de x e y do usuário
+  const xValues = document.querySelector("#x-values").value.split("\n");
+  const yValues = document.querySelector("#y-values").value.split("\n");
+
+  // Converte os valores para números
+  const xData = xValues.map((x) => Number(x));
+  const yData = yValues.map((y) => Number(y));
+
+  // Cria o objeto de dados
+  const data = [
+    {
+      x: xData,
+      y: yData,
+      type: "scatter",
+      mode: "lines",
+      marker: {
+        color: "blue",
+      },
+    },
+  ];
+
+  // Cria o layout
+  const layout = {
+    title: "Gráfico de Linha",
+    xaxis: {
+      title: "Eixo x",
+    },
+    yaxis: {
+      title: "Eixo y",
+    },
+  };
+
+  // Plota o gráfico
+  Plotly.newPlot("plot", data, layout);
+});
+
+
+
+      </script>
+</body>
+</html>

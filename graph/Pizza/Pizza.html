@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+</head>
+<body>
+  <h2>Insira os dados para o gráfico:</h2>
+  <label for="labels-input">Valores:</label>
+  <br>
+  <textarea id="values-input" rows="4" cols="50" placeholder="Insira os valores separados por vírgulas"></textarea>
+  <br>
+  <br>
+  <label for="values-input">Rótulos:</label>
+  <br>
+  <textarea id="labels-input" rows="4" cols="50" placeholder="Insira os rótulos separados por vírgulas"></textarea>
+  <br>
+  <br>
+  <button onclick="generatePieChart()">Gerar gráfico</button>
+  <br>
+  <br>
+  <div id="chart"></div>
+</body>
+
+<script>
+  function generatePieChart() {
+    // Obter os valores e rótulos inseridos pelo usuário
+    let valuesInput = document.getElementById("values-input");
+    let labelsInput = document.getElementById("labels-input");
+    let values = valuesInput.value.split(",");
+    let labels = labelsInput.value.split(",");
+
+    // Criar o objeto de dados do gráfico
+    let data = [{
+      values: values,
+      labels: labels,
+      type: "pie",
+      textinfo: "label+percent",
+      insidetextorientation: "radial"
+    }];
+
+    // Configurar o layout do gráfico
+    let layout = {
+      height: 400,
+      width: 500
+    };
+
+    // Gerar o gráfico
+    Plotly.newPlot("chart", data, layout);
+  }
+</script>
+</html>

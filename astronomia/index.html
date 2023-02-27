@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Astronomia</title>
+</head>
+
+<style>
+    body {
+  height: 100%;
+  background: linear-gradient(to bottom, #4b0082, #0000ff); /* gradiente de cor azul para roxo */
+  background-size: cover; /* cobre toda a tela */
+  /* background-repeat: no-repeat; */ /* não repete a imagem */
+  width: 100%;
+}
+
+/* Adicionando estrelas */
+.star {
+  position: absolute; /* posicionamento absoluto */
+  width: 2px; /* tamanho */
+  height: 2px; /* tamanho */
+  background: white; /* cor */
+  border-radius: 50%; /* transforma em círculo */
+  animation: twinkle 1s ease-in-out infinite; /* animação */
+}
+
+/* Animação para as estrelas */
+@keyframes twinkle {
+  0% {
+      opacity: 1;
+  }
+  100% {
+      opacity: 0.1;
+  }
+}
+
+/* Adicionando várias estrelas */
+.star:nth-child(1) {
+  top: 25%;
+  left: 40%;
+}
+
+.star:nth-child(2) {
+  top: 15%;
+  left: 70%;
+}
+
+.star:nth-child(3) {
+  top: 50%;
+  left: 60%;
+}
+/* ... e assim por diante */
+
+  </style>
+  
+<body>
+
+
+
+<div class="star"></div>
+<div class="star"></div>
+<div class="star"></div>
+    
+    
+</body>

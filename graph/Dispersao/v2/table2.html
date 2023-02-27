@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <script src="https://cdn.jsdelivr.net/npm/handsontable/dist/handsontable.full.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/handsontable/dist/languages/all.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/handsontable/dist/handsontable.full.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/css/bootstrap.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+  <script src="https://cdn.plot.ly/plotly-2.18.2.js" charset="utf-8"></script>
+  <script src="https://cdn.jsdelivr.net/npm/regression/dist/regression.min.js"></script>
+
+  <style>
+    .card-body {
+      padding: 1rem 1rem !important;
+    }
+
+    .card-header {
+      text-align: center;
+    }
+  </style>
+
+</head>
+
+<body>
+
+
+  <div class="container">
+    <div class="row">
+      <div class="col-md-2">
+        <div id="table"></div>
+      </div>
+      <div class="col-md-10">
+        <div class="card bg-default">
+          <h5 class="card-header">
+            Gráfico de Dispersão
+          </h5>
+          <div class="card-body">
+            <p class="card-text">
+            <div id="chart"></div>
+            <div id="coefficients"></div>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    $(document).ready(function () {
+      var trace = {
+        x: [],
+        y: [],
+        mode: 'markers',
+        type: 'scatter',
+        marker: {
+          color: 'black'
+        }
+      };
+
+      var layout = {
+        title: 'Clique aqui<br>para editar o tiltulo do gráfico',
+        xaxis: { title: 'Clique para editar o texto do eixo X' },
+        yaxis: { title: 'Clique para editar o texto do eixo Y' },
+        plot_bgcolor: 'white'
+      };
+
+      var config = {
+        responsive: true,
+        displayModeBar: true,
+        displaylogo: false,
+        modeBarButtonsToRemove: ['pan2d', 'select2d', 'lasso2d', 'resetScale2d', 'zoomOut2d', 'toggleSpikelines', 'hoverClosestCartesian', 'hoverCompareCartesian'],
+        editable: true,
+        modeBarButtonsToAdd: [
+          {
+            name: 'button1',
+            icon: null,
+            title: "Ajuste Linear",
+            click: function (gd) { AjusteLinear(); }
+          },
+          {
+            name: 'button2',
+            icon: null,
+            title: "Ajuste Polinomial",
+            click: function (gd) { AjustePolinomial(); }
+          }
+        ]
+      };
+
+      var dataPlot = [trace];
+
+
+      // generate an array of arrays with dummy data
+      const data = new Array(23) // number of rows
+        .fill()
+        .map((_, row) => new Array(2) // number of columns
+          .fill()
+          //.map((_, column) => `${row}, ${column}`)
+        );
+
+      Plotly.newPlot('chart', dataPlot, layout, config);
+      // cria a tabela com Handsontable
+      var container = document.getElementById('table');
+      var hot = new Handsontable(container, {
+        data,
+        minSpareRows: true, // adicionado para evitar preencher com dados duplicados
+        colHeaders: ['X', 'Y'],
+        rowHeaders: true,
+        contextMenu: true,
+        with: '100%',
+        language: 'pt-BR',
+        allowInsertColumn: false,
+        allowRemoveColumn: false,
+        licenseKey: 'non-commercial-and-evaluation'
+      });
+
+      updateChart(hot);
+
+      // adiciona uma nova linha na tabela
+      $('#addRow').on('click', function () {
+        hot.alter('insert_row');
+      });
+
+
+      // função para atualizar o gráfico
+      function updateChart(hot) {
+        var x = [];
+        var y = [];
+
+        // percorre cada linha da tabela e adiciona os valores de X e Y aos arrays correspondentes
+        var hotData = hot.getData();
+        for (var i = 0; i < hotData.length; i++) {
+          var xVal = hotData[i][0];
+          var yVal = hotData[i][1];
+          // converte os valores para números
+          if (xVal !== '') {
+            x.push(parseFloat(xVal));
+          }
+          if (yVal !== '') {
+            y.push(parseFloat(yVal));
+          }
+        }
+        // atualiza os dados do gráfico
+        Plotly.update('chart', { x: [x], y: [y] });
+      }
+
+
+      // evento de colar na tabela
+      hot.addHook('afterPaste', function (changes, source) {
+        // se a fonte do evento não foi a área de transferência, não faz nada
+        if (source !== 'paste') {
+          return;
+        }
+
+        var hotData = hot.getData();
+
+        // percorre cada linha que foi colada
+        for (var i = 0; i < changes.length; i++) {
+          var row = changes[i][0];
+          var col = changes[i][1];
+          var pastedData = changes[i][3];
+
+          // verifica se o valor colado é uma string
+          if (typeof pastedData === 'string') {
+            // quebra o texto colado em linhas
+            var pastedLines = pastedData.split('\n');
+
+            // percorre cada linha e adiciona os dados correspondentes à tabela
+            for (var j = 0; j < pastedLines.length; j++) {
+              hotData[row + j][col] = pastedLines[j];
+            }
+
+            // atualiza a tabela com os novos valores
+            hot.loadData(hotData);
+          }
+        }
+      });
+
+
+      // atualiza o gráfico quando a tabela é modificada
+      hot.addHook('afterChange', function () {
+        updateChart(hot);
+      });
+
+
+      // Ajuste Linear
+
+      function AjusteLinear() {
+        // Recupera os dados da tabela
+        const data = hot.getData();
+
+        // Extrai apenas os valores preenchidos
+        const x = [];
+        const y = [];
+
+        for (var i = 0; i < data.length; i++) {
+          if (!hot.isEmptyRow(i)) {
+            x.push(parseFloat(data[i][0]));
+            y.push(parseFloat(data[i][1]));
+          }
+        }
+
+
+        // Realiza o ajuste linear com a biblioteca regression
+        var result = regression.linear(x.map((xi, i) => [xi, y[i]]));
+        var slope = result.equation[0];
+        var yIntercept = result.equation[1];
+
+        // Exibe os valores do coeficiente na div
+        document.getElementById("coefficients").innerHTML =
+          "Coeficiente Angular: " + slope.toFixed(2) +
+          "<br>Coeficiente Linear: " + yIntercept.toFixed(2);
+
+        // Atualiza o gráfico Plotly com o ajuste
+        const regressionLineX = [Math.min(...x), Math.max(...x)];
+        const regressionLineY = regressionLineX.map(xi => slope * xi + yIntercept);
+
+        const predictedTrace = {
+          x: regressionLineX,
+          y: regressionLineY,
+          mode: "lines",
+          line: {
+            color: "orange",
+            width: 3
+          },
+        };
+
+
+        // Adiciona a trace ao gráfico
+        Plotly.addTraces("chart", [predictedTrace]);
+
+      }
+
+// Ajuste Polinomial
+
+function AjustePolinomial() {
+  // Recupera os dados da tabela
+  const data = hot.getData();
+
+  // Extrai apenas os valores preenchidos
+  const x = [];
+  const y = [];
+
+  for (var i = 0; i < data.length; i++) {
+    if (!hot.isEmptyRow(i)) {
+      x.push(parseFloat(data[i][0]));
+      y.push(parseFloat(data[i][1]));
+    }
+  }
+
+  // Realiza o ajuste polinomial com a biblioteca regression-js
+  var result = regression.polynomial(x.map((xi, i) => [xi, y[i]]), { order: 2 });
+  var coefficients = result.equation;
+
+  // Cria uma série de pontos de dados para a curva ajustada
+  var xFit = [];
+  var yFit = [];
+  var step = (Math.max.apply(null, x) - Math.min.apply(null, x)) / 100;
+  for (var i = Math.min.apply(null, x); i <= Math.max.apply(null, x); i += step) {
+    xFit.push(i);
+    yFit.push(coefficients[2] * Math.pow(i, 2) + coefficients[1] * i + coefficients[0]);
+  }
+
+  // Adiciona a curva ajustada ao gráfico
+  var traceFit = {
+    x: xFit,
+    y: yFit,
+    mode: 'lines',
+    line: {
+      color: 'red'
+    },
+    name: 'Curva ajustada'
+  };
+  Plotly.addTraces('chart', traceFit);
+
+  // Exibe os valores do coeficiente na div
+  document.getElementById("coefficients").innerHTML =
+    "Coeficiente de grau 2: " + coefficients[2].toFixed(3) +
+    "<br>Coeficiente de grau 1: " + coefficients[1].toFixed(3) +
+    "<br>Coeficiente de grau 0: " + coefficients[0].toFixed(3);
+}
+
+
+
+
+      /*
+
+      function AjustePolinomial() {
+  // Recupera os dados da tabela
+  const data = hot.getData();
+
+  // Extrai apenas os valores preenchidos
+  const x = [];
+  const y = [];
+
+  for (var i = 0; i < data.length; i++) {
+    if (!hot.isEmptyRow(i)) {
+      x.push(parseFloat(data[i][0]));
+      y.push(parseFloat(data[i][1]));
+    }
+  }
+
+  // Realiza o ajuste polinomial com a biblioteca regression
+  const degree = 2; // grau do polinômio
+  const result = regression.polynomial(x.map((xi, i) => [xi, y[i]]), { order: degree });
+
+  // Exibe a equação de ajuste e os coeficientes
+  const coefficients = result.string.split(' + ');
+  const equation = 'Função de ajuste: a0*x^2+a1*x+a2';
+  document.getElementById('coefficients').innerHTML = equation+
+    '<br>a0: ' + result.equation[0].toFixed(2) +
+    '<br>a1: ' + result.equation[1].toFixed(2) +
+    '<br>a2: ' + result.equation[2].toFixed(2);
+
+  // Atualiza o gráfico Plotly com o ajuste
+  const predictedTrace = {
+    x: x,
+    y: result.points.map(point => point[1]),
+    mode: 'lines',
+    line: {
+      color: 'green',
+      width: 3,
+    },
+  };
+
+  // Adiciona a trace ao gráfico
+  Plotly.addTraces('chart', [predictedTrace]);
+}
+*/
+
+
+    });
+
+  </script>
+  
+</body>
+
+</html>

@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+  <script src="https://unpkg.com/regression"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/css/bootstrap.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+
+
+  <style>
+    .removeRow {
+      background-color: #f44336;
+      color: white;
+      border: none;
+      padding: 5px 10px;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      font-size: 14px;
+      margin: 2px;
+      cursor: pointer;
+    }
+
+    .removeRow:hover {
+      background-color: #da190b;
+    }
+
+    th.col3 {
+      width: 30px;
+    }
+
+
+
+
+    #plot {
+      height: auto;
+      width: 100% !important;
+    }
+
+    .table-light {
+      --bs-table-bg: #b1b1b1 !important;
+    }
+
+    #tabela td[contenteditable="true"]:focus {
+      outline: none;
+      text-align: center;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-4">
+        <table id="tabela" class="table table-striped table-bordered table-hover">
+          <thead class="table-light">
+            <tr class="text-center">
+              <th>X</th>
+              <th>Y</th>
+              <th class="col3"></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td icontenteditable="true"></td>
+              <td contenteditable="true"></td>
+              <td><button class="removeRow">Remover</button></td>
+            </tr>
+            <tr>
+              <td contenteditable="true"></td>
+              <td contenteditable="true"></td>
+              <td><button class="removeRow">Remover</button></td>
+            </tr>
+            <tr>
+              <td contenteditable="true"></td>
+              <td contenteditable="true"></td>
+              <td><button class="removeRow">Remover</button></td>
+            </tr>
+            <tr>
+              <td contenteditable="true"></td>
+              <td contenteditable="true"></td>
+              <td><button class="removeRow">Remover</button></td>
+            </tr>
+            <tr>
+              <td contenteditable="true"></td>
+              <td contenteditable="true"></td>
+              <td><button class="removeRow">Remover</button></td>
+            </tr>
+            <tr>
+              <td contenteditable="true"></td>
+              <td contenteditable="true"></td>
+              <td><button class="removeRow">Remover</button></td>
+            </tr>
+          </tbody>
+        </table>
+
+        <button class="btn btn-success" id="addRow">Adicionar Linha</button>
+
+      </div>
+      <div class="col-md-8">
+        <div class="card bg-default">
+          <h5 class="card-header">
+            Gráfico de Dispersão
+          </h5>
+          <div class="card-body">
+            <p class="card-text">
+            <div id="chart"></div>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    $(document).ready(function () {
+      var trace = {
+        x: [],
+        y: [],
+        mode: 'markers',
+        type: 'scatter'
+      };
+
+      var layout = {
+        title: 'Clique aqui<br>para editar o tiltulo do gráfico',
+        xaxis: { title: 'Clique para editar o texto do eixo X' },
+        yaxis: { title: 'Clique para editar o texto do eixo Y' },
+        plot_bgcolor: 'white'
+      };
+
+      var config = {
+        responsive: true,
+        displayModeBar: true,
+        displaylogo: false,
+        modeBarButtonsToRemove: ['pan2d', 'select2d', 'lasso2d', 'resetScale2d', 'zoomOut2d', 'toggleSpikelines', 'hoverClosestCartesian', 'hoverCompareCartesian'],
+        editable: true,
+        modeBarButtonsToAdd: [
+          {
+            name: 'button1',
+            icon: null,
+            title: "Ajuste Linear",
+            click: function (gd) {
+              AjusteLinear();
+            }
+          }
+        ]
+      };
+
+      var data = [trace];
+
+      Plotly.newPlot('chart', data, layout, config);
+
+      // função para atualizar o gráfico
+      function updateChart() {
+        var x = [];
+        var y = [];
+
+        // percorre cada linha da tabela e adiciona os valores de X e Y aos arrays correspondentes
+        $('#tabela tbody tr').each(function () {
+          var $td = $(this).find('td');
+          x.push(Number($td.eq(0).text()));
+          y.push(Number($td.eq(1).text()));
+        });
+
+        // atualiza os dados do gráfico
+        Plotly.update('chart', { x: [x], y: [y] });
+      }
+
+      // atualiza o gráfico sempre que houver uma mudança na tabela
+      $('#tabela').on('input', 'td', function () {
+        updateChart();
+      });
+
+      // adiciona uma nova linha na tabela
+      $('#addRow').click(function () {
+        $('#tabela tbody').append('<tr><td contenteditable="true"></td><td contenteditable="true"></td><td><button class="removeRow">Remover</button></td></tr>');
+      });
+
+      // remove a linha correspondente ao botão "Remover" clicado
+      $('#tabela').on('click', '.removeRow', function () {
+        $(this).closest('tr').remove();
+        updateChart();
+      });
+    });
+
+
+    function AjusteLinear() {
+      const [xValues, yValues] = getData();
+
+      const result = regression.linear(xValues.map((x, i) => [x, yValues[i]]));
+
+      const xFit = [Math.min(...xValues), Math.max(...xValues)];
+      const yFit = xFit.map(x => result.predict(x)[1]);
+
+      const trace = {
+        x: xFit,
+        y: yFit,
+        name: 'Ajuste Linear',
+        mode: 'lines',
+        type: 'scatter',
+        line: { color: 'blue' }
+      };
+
+      const layout = {
+        xaxis: { title: 'X' },
+        yaxis: { title: 'Y' }
+      };
+
+      Plotly.addTraces('plot', trace);
+      document.getElementById('coefficients').innerHTML = `Coeficiente Linear: ${result.equation[0].toFixed(2)}<br>Coeficiente Angular: ${result.equation[1].toFixed(2)}`;
+
+    }
+
+    $(document).ready(function () {
+      $('#tabela').DataTable({
+        select: true
+      });
+    });
+
+
+
+
+  </script>
+
+
+</body>
+
+</html>
